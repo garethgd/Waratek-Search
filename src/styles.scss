@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'app/sass-variables/colors';
+@import 'app/sass-variables/fonts';
+
+body{
+     background-color: #263D45;
+}
+
+h1{
+    font-family: 'Raleway', sans-serif;
+}

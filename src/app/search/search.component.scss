@@ -1,0 +1,70 @@
+.search {
+  text-align: center;
+}
+
+h1 {
+  font-family: 'Raleway', sans-serif;
+  padding: 2em 0;
+  text-align: center;
+  font-weight: 100;
+  
+}
+
+form {
+  input {
+    font-family: 'Raleway', sans-serif;
+    width: 100%;
+    font-size: 3em;
+    padding-left: 18px;
+    border: 1px solid #0AFDA4;
+  }
+}
+
+.suggestions {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  li {
+    background: #578F7A;
+    list-style: none;
+    border-bottom: 1px solid #267E6D;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.14);
+    margin: 0;
+    padding: 20px;
+    transition: background 0.2s;
+    display: flex;
+    justify-content: space-between;
+    text-transform: capitalize;
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: .85em;
+    margin-top: 0;
+    text-align: center;
+    &:nth-child(even) {
+      transform: perspective(100px) rotateX(3deg) translateY(2px) scale(1.001);
+      background: linear-gradient(to bottom, #2b3e50 0%, #2b3e50 100%);
+    }
+    &:nth-child(odd) {
+      transform: perspective(100px) rotateX(-3deg) translateY(3px);
+      background: linear-gradient(to top, #2b3e50 0%, #2b3e50 100%);
+    }
+  }
+  /*perspective:20px;*/
+}
+
+#lbl {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: .85em;
+  margin-top: 0;
+  text-align: center;
+}
+
+.btn-search-bar {
+  input {
+    font-family: 'Raleway', sans-serif;
+    font-size: 0.85em;
+  }
+}
