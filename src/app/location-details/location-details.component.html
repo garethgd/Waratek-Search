@@ -1,0 +1,14 @@
+<div [@moveInLeft]="state" class="container" *ngIf="selectedPlace">
+  <div class="detail-img">
+    <!--<img src="{{ selectedPlace.imgsrc }}">-->
+  </div>
+  <div class="desc">
+    <h1> {{selectedPlace.city}} {{selectedPlace.state}} </h1>
+    <span>Longitude  </span>
+    <p #lat> {{selectedPlace.loc[0]}} </p>
+    <span>Latitude </span>
+    <p #long>{{selectedPlace.loc[1]}} </p>
+    <span>Population </span>
+    <p #long>{{selectedPlace.pop | number}}  </p>
+  </div>
+</div>

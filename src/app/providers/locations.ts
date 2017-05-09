@@ -3,6 +3,7 @@ import 'rxjs/add/operator/map';
 import { Place } from '../model/place'
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { LocationsService } from '../services/locations.service';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 //global oboe variable from oboe package
 declare var oboe: any;
@@ -17,72 +18,69 @@ export class Locations {
     private places: Place[] = [];
     private keyword: Observable<Array<string>>;
     private _places: BehaviorSubject<Place[]>;
-    private dataStore: {  // This is where we will store our data in memory
-        places: Place[]
-    };
+    private apiKey: string = "AIzaSyD9DG-l3nQM0seilByyK4ye58nU7YayA38";
+
     private oboeService: any;
-    constructor(public http: Http) {
-        this.dataStore = { places: [] };
-        // this._places = <BehaviorSubject<Place[]>>new BehaviorSubject()
+    constructor(public http: Http, public locationService: LocationsService) {
+
     }
+
     listen(): void {
         console.log("Starting Stream");
 
     }
 
-    findMatches(wordToMatch, towns) {
-        return towns.filter(place => {
-            const regex = new RegExp(wordToMatch, 'gi');
-            return place.city.match(regex) || place.state.match(regex)
-        })
-
-    }
-    getComments(term) {
-
-        if (this.data) {
-            return Promise.resolve(this.data);
-        }
-        return new Promise(resolve => {
-            this.http.get('assets/data/zips.json')
-                .map(res => <Place[]>res.json())
-                .subscribe(data => {
-                    // data corresponds to a list of OrderBasket
-                    console.log(data);
-                });
-
-
-        });
-
-
-    }
-   
-    getStates(term) {
+    getStates() {
 
         // console.log(this.dataStore);
         this.listen();
 
-        if (this.data) {
-            return Promise.resolve(this.data);
-        }
         return new Promise(resolve => {
             oboe('assets/data/zips.json')
-                .done(function (things) {
+                .done(things => {
+
                     this.place = new Place(things._id, things.state, things.location, things.pop, things.state);
-
-                    //   console.log(this.place);
-                        // console.log(this.dataStore);
-                    // this.dataStore.push(this.place);
-
-                    resolve(things)
-
-
-                    // we got it
+                    this.locationService.setPlaces(things)
+                    this.places = new Array<Place>();
+                    resolve(true);
                 })
+
+
                 .fail(function () {
 
                     // we don't got it
                 });
+            if (this.data) {
+                return Promise.resolve(this.data);
+            }
 
+
+
+
+
+        });
+
+    }
+
+    getPhoto(reference: string) {
+        return new Promise(resolve => {
+            this.http.request('https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&' + reference + '&key=AIzaSyD9DG-l3nQM0seilByyK4ye58nU7YayA38').subscribe(data => {
+                console.log(data.url);
+                resolve(data.url);
+
+            })
+        });
+    }
+    getGoogleMapsLocation(lat, lng) {
+        return new Promise(resolve => {
+            let coords = lat + ',' + lng;
+            this.http.request('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + coords + this.apiKey)
+                .map(res => res.json()).subscribe(data => {
+                    console.log(data.results);
+                    this.data = data.results;
+                    resolve(this.data);
+
+                });
 
         });
     }

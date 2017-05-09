@@ -1,15 +1,17 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-
+import { SearchComponent } from './search/search.component';
+import { HomeComponent } from './home/home.component';
 import { AppComponent } from './app.component';
-import { AboutComponent } from './about/about.component';
-import { ServicesComponent } from './services/services.component';
+
+
 
 export const router: Routes = [
-    // { path: '', redirectTo: 'about', pathMatch: 'full' },
-    { path: 'about', component: AboutComponent },
-    { path: 'services', component: ServicesComponent }
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: 'home', component: HomeComponent },
+    { path: 'search', component: SearchComponent },
+
 ];
 
 export const routes: ModuleWithProviders = RouterModule.forRoot(router);

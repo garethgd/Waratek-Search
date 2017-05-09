@@ -7,16 +7,23 @@ h1 {
   padding: 2em 0;
   text-align: center;
   font-weight: 100;
-  
 }
 
 form {
   input {
     font-family: 'Raleway', sans-serif;
     width: 100%;
-    font-size: 3em;
+   
     padding-left: 18px;
     border: 1px solid #0AFDA4;
+    text-transform: none;
+    letter-spacing: 2px;
+    font-size: 1.85em;
+    margin-top: 0;
+    font-size: 2.5em;
+    padding: 10px;
+    /* text-align: center; */
+   
   }
 }
 
@@ -45,10 +52,16 @@ form {
     &:nth-child(even) {
       transform: perspective(100px) rotateX(3deg) translateY(2px) scale(1.001);
       background: linear-gradient(to bottom, #2b3e50 0%, #2b3e50 100%);
+      &:hover {
+        background: #267E6D;
+      }
     }
     &:nth-child(odd) {
       transform: perspective(100px) rotateX(-3deg) translateY(3px);
       background: linear-gradient(to top, #2b3e50 0%, #2b3e50 100%);
+      &:hover {
+        background: #267E6D;
+      }
     }
   }
   /*perspective:20px;*/

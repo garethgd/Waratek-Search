@@ -4,6 +4,11 @@ import { moveInLeft } from '../animations';
 import "rxjs/Rx";
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
+import { LocationsService } from '../services/locations.service';
+import { Place } from '../model/place'
+import { Directive, HostListener, HostBinding } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -15,22 +20,44 @@ export class SearchComponent implements OnInit {
   towns = [];
   searchElement: ElementRef;
   state: string = '';
-  model: string = 'fdsf';
+  alreadyChecked: boolean = false;
   items: Observable<Array<string>>;
   term = new FormControl();
-  constructor(public locations: Locations) {
+  places: Place[];
+  values = '';
+  selectedPlace: Place;
+  matchedArray: Observable<Array<Place>>;
+  constructor(public locations: Locations, public locationService: LocationsService, private cdRef: ChangeDetectorRef) {
 
 
   }
 
 
-  ngOnInit() {
+  ngAfterViewInit() {
 
-    
-    this.items = this.term.valueChanges
+    this.places = this.locationService.getPlaces();
+
+
+    //Match values from streamed array to what is typed
+    this.term.valueChanges
       .debounceTime(400)
       .distinctUntilChanged()
-      .switchMap(term => this.locations.getStates(term));
+      .subscribe(data => this.displayMatches(data)),
+      function (error) { console.log("Error happened" + error) },
+      function () { console.log("the subscription is completed") }
+
+    this.cdRef.detectChanges();
+  }
+
+  ngOnInit() {
+
+    let locationsLoaded = this.locations.getStates()
+
+    Promise.all([
+      locationsLoaded
+    ])
+
+
   }
 
   findMatches(wordToMatch, towns) {
@@ -41,32 +68,17 @@ export class SearchComponent implements OnInit {
 
   }
 
-  displayMatches() {
+  displayMatches(data) {
 
-    const searchInput = document.querySelector('#search');
-
-    // searchInput.addEventListener('change', f)
+    this.matchedArray = this.findMatches(data, this.places);
+    const regexHighlight = new RegExp(data, 'gi');
+    
   }
-  // onKey(event: any) { // without type info
-  //   event.target.value + ' | ';
 
-  //   let locationsLoaded = this.locations.getStates();
-  //   console.log(this.model);
-  // }
-  ngOnChanges(model: SimpleChanges) {
-
-    // let locationsLoaded = this.locations.getStates();
-
-    // Promise.all([
-
-    //   locationsLoaded
-    // ]).then((result) => {
-
-    //   this.towns = result;
-    //   console.log(this.towns);
-    // })
-
-    this.displayMatches();
+  setSelectedPlace(selectedPlace) {
+    console.log(selectedPlace);
+    this.selectedPlace = selectedPlace
   }
+
 
 }

@@ -8,23 +8,26 @@ import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AboutComponent } from './about/about.component';
-import { ServicesComponent } from './services/services.component';
+
+
 import { SearchComponent } from './search/search.component';
 import { Locations } from './providers/locations';
 import { HomeComponent } from './home/home.component';
+import { LocationsService } from './services/locations.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LocationDetailsComponent } from './location-details/location-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    AboutComponent,
-    ServicesComponent,
+   
+ 
     SearchComponent,
-    HomeComponent
+    HomeComponent,
+    LocationDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     NgbModule.forRoot(),
     ReactiveFormsModule
   ],
-  providers: [Locations],
+  providers: [Locations,LocationsService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

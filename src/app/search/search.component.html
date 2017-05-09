@@ -1,23 +1,26 @@
+<app-location-details [selectedPlace] = "selectedPlace"></app-location-details>
+
 <div class="search">
   <div [@moveInLeft]="state" class="search-bar">
     <h1>Stateside</h1>
     <div class="search-field">
-      <form action="" #formData='ngForm' (ngModel)="stateSearch" (ngSubmit)="onSubmit(formData)">
-        <input type="input-group" [formControl]="term" name="searchModel" placeholder="City Or State">
-        <!--<div *ngIf="formErrors.firstName" class="alert alert-danger">
-        {{formErrors.firstName}}
-      </div>-->
+      <form action="" #formData='ngForm' (ngModel)="stateSearch" (keyup.enter)="values=box.value">
+        <input type="text" [formControl]="term" name="searchModel" placeholder="City Or State">
         <span class="input-group-btn">
-          <!--<input #search id="search" placeholder="City of State" type="submit" value="Search" class="btn btn-default btn-search-bar" >-->
-            
+          
           </span>
         <ul class="suggestions">
-          <li *ngFor="let item of items | async"></li>
-          <li>Filter for a city</li>
+          <li *ngFor="let place of matchedArray" (click)="setSelectedPlace(place)">{{place.city}}
+            <p>Population: {{place.pop}} </p>
+          </li>
+          <li>Search for city</li>
           <li>or a state</li>
-          
         </ul>
+        <table>
+        </table>
       </form>
     </div>
   </div>
 </div>
+
+
