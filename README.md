@@ -2,7 +2,7 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
-This project is autocomplete search using Oboe.js as to stream line deliminted JSON.
+This project is autocomplete search for US cities using Oboe.js to stream line deliminted JSON. It demonstrates the use of Observables and Promises to retrieve data. As well as mapping a JSON Object to a TypeScript Object to display in the view. 
 
 ## Install Angular CLI
 
